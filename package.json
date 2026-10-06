@@ -1,0 +1,29 @@
+{
+  "name": "parallax",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "corpus": "tsx scripts/corpus.ts",
+    "bench": "tsx --env-file=.env.local scripts/bench.ts",
+    "images": "python scripts/images.py",
+    "export": "tsx scripts/export.ts",
+    "scan": "tsx --env-file=.env.local scripts/scan.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/node": "^26.6.4",
+    "playwright": "^1.63.0",
+    "pptxgenjs": "^4.0.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "diff": "^9.0.0",
+    "jszip": "^3.10.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.4.299"
+  },
+  "description": "Find instructions hidden in PDFs before an agent acts on them, using Foxit PDF Services.",
+  "license": "MIT"
+}

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallax — what your agent reads that nobody sees</title>
+<meta name="description" content="PDFs can carry instructions no person ever sees. Parallax compares what an agent's PDF loader extracts with what Foxit's render of the page shows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="bar">
+  <a class="mark" href="#top" aria-label="Parallax, back to top">
+    <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="5" width="15" height="19" rx="1.5"/><rect x="10" y="3" width="15" height="19" rx="1.5"/></svg>
+    Parallax
+  </a>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#documents">The test</a>
+    <a href="#proposal">Proposal</a>
+    <a href="https://github.com/RaYYeR220/parallax">Code</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-copy">
+    <h1>Your agent shouldn’t read that.</h1>
+    <p class="lede">A PDF can carry instructions no person will ever see: white text, half-point type, words painted under a box, a note in a hidden annotation. An agent’s PDF loader reads all of them, and the model acts on them.</p>
+    <p class="lede">Parallax compares what the loader extracts with what Foxit’s render of the page actually shows, and hands the agent only what a person could read.</p>
+    <p class="finding" id="hero-finding"></p>
+  </div>
+
+  <figure class="specimen" id="hero-specimen">
+    <div class="lamp" role="group" aria-label="Choose a view of the document">
+      <button type="button" class="lamp-btn" data-view="person" aria-pressed="true">What a person sees</button>
+      <button type="button" class="lamp-btn" data-view="model" aria-pressed="false">What the model reads</button>
+    </div>
+    <div class="sheet" data-view="person"></div>
+    <figcaption id="hero-caption"></figcaption>
+  </figure>
+</section>
+
+<section class="how" id="how">
+  <h2>Two views of the same page</h2>
+  <p class="section-lede">A hidden instruction is, by definition, text that exists in the file and not on the page. So Parallax asks for both, from Foxit PDF Services, and compares them.</p>
+  <ol class="steps">
+    <li>
+      <h3>Read it like a loader</h3>
+      <p>The text layer, as agent frameworks extract it: Foxit <code>pdf-to-text</code>, plus pypdf and pdf.js, the libraries behind LangChain’s loaders. Annotations, form values and metadata are read too.</p>
+    </li>
+    <li>
+      <h3>Look at it like a person</h3>
+      <p>Foxit renders every page to an image with <code>pdf-to-image</code>, rebuilds it from pixels with <code>pdf-from-image</code> and reads it back with <code>pdf-ocr</code>. What comes out is what a reader can see.</p>
+    </li>
+    <li>
+      <h3>Keep what both agree on</h3>
+      <p>Text in the first view and not the second is flagged. Foxit’s <code>pdf-structural-analysis</code> explains it where it can, a 0.5 pt font or a box off the page, and supplies the structured elements the agent receives instead.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="documents" id="documents">
+  <h2>Sixteen documents, twelve with something hidden</h2>
+  <p class="section-lede">Invoices, terms, an NDA, CVs, a purchase order. Each attack uses a different way of hiding text. The four controls are there to catch false alarms: a legitimate 6 pt footnote, white text on a navy band that anyone can read, a scan with no text layer at all, and a plain clean invoice.</p>
+  <div class="grid" id="grid"></div>
+  <article class="detail" id="detail" hidden></article>
+</section>
+
+<section class="results" id="results">
+  <h2>Results</h2>
+  <p class="section-lede" id="results-lede"></p>
+  <div class="table-wrap">
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th scope="col">Document</th>
+          <th scope="col">How it is hidden</th>
+          <th scope="col">pypdf extracts it</th>
+          <th scope="col">pdf.js extracts it</th>
+          <th scope="col">Parallax flags it</th>
+          <th scope="col">Left in Parallax output</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="proposal" id="proposal">
+  <h2>The proposal</h2>
+  <div class="proposal-body">
+    <div>
+      <p>Foxit’s MCP server and agentic workflow guides put PDFs in front of agents. Nobody has yet written about what a PDF can do to the agent reading it. This is that piece, and it is the natural sequel to Foxit’s own API World challenge, <em>Your Agent Shouldn’t Sign That</em>.</p>
+      <p>It also sits next to the security work already in Foxit’s products. PDF Action Inspector finds active code a person cannot see. Parallax finds instructions a person cannot see, using nothing but Foxit PDF Services to do it.</p>
+    </div>
+    <dl class="deliverables">
+      <div><dt>Sample app</dt><dd>This tool, hardened and documented, as an open-source repository developers can clone and run against their own documents.</dd></div>
+      <div><dt>Article</dt><dd>About 1,500 words for the Foxit developer blog, walking through the code: the two views, the comparison, and the structured output.</dd></div>
+      <div><dt>Benchmark</dt><dd>The corpus and the scoring script, published so the numbers can be checked and the attacks extended.</dd></div>
+      <div><dt>Timeline</dt><dd>Sample app and benchmark in the first week after scope is agreed, article in the second.</dd></div>
+      <div><dt>What could follow</dt><dd>A tamper-evident audit trail for AI document decisions, and an agent toolkit for the Vercel AI SDK and OpenAI Agents SDK with eSign behind human approval.</dd></div>
+    </dl>
+  </div>
+  <div class="author">
+    <p><strong>Egor</strong> took first place in Foxit’s challenge at API World 2026 with <a href="https://chancery.live">Chancery</a>, where an agent can do any reversible document work and every irreversible act is checked against a document a human signed. <a href="https://github.com/RaYYeR220/chancery">Repository</a>, <a href="https://youtu.be/t14eSJ_cQ_U">walkthrough</a>.</p>
+  </div>
+</section>
+
+<section class="notes" id="notes">
+  <h2>What to know about these numbers</h2>
+  <ul>
+    <li id="note-run"></li>
+    <li>Every attack here was written by hand for this test. The corpus is small and single-page on purpose, so each result can be read and checked; it is not a measure of how often these attacks occur.</li>
+    <li>Parallax finds text that is in the file and not on the page. It does not judge text a person can see but might skim past, and it does not decide whether flagged text is malicious. It reports what it found and why, and leaves it out of what the agent receives.</li>
+    <li>The comparison assumes the loader and the OCR read in roughly the same order. Complex multi-column layouts can misalign and are the first thing to harden.</li>
+    <li>A one-page document costs five Foxit credits: text, render, rebuild, OCR and structure. Each further page adds two.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Parallax is built on Foxit PDF Services. It is an independent project and is not affiliated with or endorsed by Foxit.</p>
+</footer>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<title>Parallax — proposal deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body class="deck">
+
+<section class="slide dark" id="s1">
+  <div class="s1-copy">
+    <p class="kicker">A content proposal for the Foxit developer program</p>
+    <h1>Your agent shouldn’t read that.</h1>
+    <p class="big">Parallax finds instructions hidden in PDFs before an agent acts on them, using nothing but Foxit PDF Services.</p>
+    <p class="byline">Egor, first place in Foxit’s challenge at API World 2026</p>
+  </div>
+  <div class="s1-sheet"><div class="sheet" data-view="model" data-doc="A01"></div></div>
+</section>
+
+<section class="slide" id="s2">
+  <h2>Agents read text that people never see</h2>
+  <div class="pair">
+    <figure>
+      <div class="sheet" data-view="person" data-doc="A07"></div>
+      <figcaption>What a person sees: an unremarkable CV.</figcaption>
+    </figure>
+    <figure>
+      <div class="sheet" data-view="model" data-doc="A07"></div>
+      <figcaption>What the model reads: the same page, plus an instruction set in an invisible text mode.</figcaption>
+    </figure>
+    <div class="pair-copy">
+      <p class="stat" id="s2-stat"></p>
+      <p>White text, half-point type, words under a box, text off the page, notes in hidden annotations. None of it shows on screen or in print. All of it reaches the model as ordinary text.</p>
+      <p>Foxit’s MCP server and agentic workflow guides are putting PDFs in front of agents. Nobody has written yet about what a PDF can do to the agent reading it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s3">
+  <h2>Two views of the same page, both from Foxit</h2>
+  <ol class="flow">
+    <li>
+      <h3>Read it like a loader</h3>
+      <p>The text layer as agent frameworks extract it, plus annotations, form values and metadata.</p>
+      <p class="apis"><code>pdf-to-text</code></p>
+    </li>
+    <li>
+      <h3>Look at it like a person</h3>
+      <p>Every page rendered to pixels, rebuilt as a PDF and read back by OCR. What comes out is what a reader can see.</p>
+      <p class="apis"><code>pdf-to-image</code> <code>pdf-from-image</code> <code>pdf-ocr</code></p>
+    </li>
+    <li>
+      <h3>Keep what both agree on</h3>
+      <p>Text in the first view and not the second is flagged and explained. The agent receives only the structured elements the page confirms.</p>
+      <p class="apis"><code>pdf-structural-analysis</code></p>
+    </li>
+  </ol>
+  <p class="foot-note">Five Foxit PDF Services endpoints, end to end. Five credits for a one-page document.</p>
+</section>
+
+<section class="slide" id="s4">
+  <h2 id="s4-title"></h2>
+  <div class="results">
+    <div class="bars" id="bars"></div>
+    <div class="mini-grid" id="mini-grid"></div>
+  </div>
+  <p class="foot-note" id="s4-note"></p>
+</section>
+
+<section class="slide" id="s5">
+  <h2>Why this belongs on the Foxit developer blog</h2>
+  <ul class="reasons">
+    <li><h3>It is the sequel to Foxit’s own challenge</h3><p><em>Your Agent Shouldn’t Sign That</em> asked where an agent’s authority should stop. This asks what an agent should be allowed to read.</p></li>
+    <li><h3>It fills a gap next to the MCP server</h3><p>Setup guides and agentic workflow articles exist. A guide to keeping those agents safe from the documents they ingest does not.</p></li>
+    <li><h3>It extends a story Foxit already tells</h3><p>PDF Action Inspector finds active code a person cannot see. Parallax finds instructions a person cannot see.</p></li>
+    <li><h3>It is a showcase for PDF Services</h3><p>Rendering, OCR, structural analysis and conversion, working together to answer a question none of them answers alone.</p></li>
+  </ul>
+</section>
+
+<section class="slide dark" id="s6">
+  <h2>The proposal</h2>
+  <div class="prop">
+    <dl>
+      <div><dt>Sample app</dt><dd>Parallax, hardened and documented, as an open-source repository developers can run on their own documents.</dd></div>
+      <div><dt>Article</dt><dd>About 1,500 words for the Foxit developer blog walking through the code.</dd></div>
+      <div><dt>Benchmark</dt><dd>The corpus and scoring script, public, so the numbers can be checked and the attacks extended.</dd></div>
+      <div><dt>Timeline</dt><dd>Sample app and benchmark in week one after scope is agreed, article in week two.</dd></div>
+      <div><dt>Could follow</dt><dd>A tamper-evident audit trail for AI document decisions; an agent toolkit for the Vercel AI SDK and OpenAI Agents SDK with eSign behind human approval.</dd></div>
+    </dl>
+    <div class="links">
+      <p class="label">Try it</p>
+      <p class="url" id="s6-url">parallax demo</p>
+      <p class="label">Code</p>
+      <p class="url">github.com/RaYYeR220/parallax</p>
+      <p class="label">Previous work</p>
+      <p class="url">chancery.live</p>
+    </div>
+  </div>
+</section>
+
+<script type="module" src="deck.js"></script>
+</body>
+</html>
