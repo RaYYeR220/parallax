@@ -8,7 +8,7 @@ Parallax asks two questions of the same file and compares the answers. What does
 
 Every step that touches the document runs on [Foxit PDF Services](https://developer-api.foxit.com/).
 
-**Demo:** see the results, document by document, on the demo page (link in the repository description).
+**Demo:** [parallax-pdf.vercel.app](https://parallax-pdf.vercel.app) shows every test document, what a loader extracts from it, and what Parallax hands the agent instead.
 
 ## Run it
 

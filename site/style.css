@@ -321,7 +321,9 @@ td.bad { color: var(--alarm); font-weight: 700; }
 .deliverables div { display: grid; grid-template-columns: 10.5em minmax(0, 1fr); gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .deliverables dt { font-weight: 700; }
 .deliverables dd { margin: 0; color: var(--ink-soft); }
-.author { margin-top: 40px; padding: 22px 24px; background: var(--paper); border: 1px solid var(--rule); max-width: 78ch; }
+.deck-links { margin: 36px 0 0; font-size: 18px; }
+.deck-links a { font-weight: 600; }
+.author { margin-top: 24px; padding: 22px 24px; background: var(--paper); border: 1px solid var(--rule); max-width: 78ch; }
 .author p { margin: 0; }
 
 /* ------------------------------------------------------------------ notes */
